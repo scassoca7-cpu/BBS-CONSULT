@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BBS-CONSULTING - Consultoria Empresarial em Angola.">
+    <title>BBS-CONSULTING | Transforme seu negócio</title>
+    
+    <!-- Fontes e Ícones -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ESTILO CSS INTEGRADO (Para funcionar em um único arquivo) -->
+    <style>
+        /* Reset e Básicos */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #333; background-color: #fff; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .section { padding: 80px 0; }
+
+        /* Navbar */
+        .navbar { background: #fff; height: 80px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: fixed; width: 100%; top: 0; z-index: 1000; display: flex; align-items: center; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .nav-brand a { font-size: 1.5rem; font-weight: 800; color: #2c3e50; display: flex; align-items: center; gap: 10px; }
+        .nav-brand i { color: #3498db; }
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-link { font-weight: 500; color: #555; transition: 0.3s; }
+        .nav-link:hover { color: #3498db; }
+        .nav-toggle { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); height: 100vh; color: white; display: flex; align-items: center; text-align: center; position: relative; }
+        .hero-title { font-size: 3rem; margin-bottom: 20px; font-weight: 800; }
+        .hero-subtitle { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; opacity: 0.9; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 50px; }
+
+        .btn { padding: 12px 30px; border-radius: 5px; font-weight: 600; transition: 0.3s; display: inline-block; border: none; cursor: pointer; }
+        .btn-primary { background: #e74c3c; color: white; }
+        .btn-primary:hover { background: #c0392b; }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; }
+        .btn-secondary:hover { background: white; color: #2c3e50; }
+        .btn-outline { border: 2px solid #3498db; color: #3498db; background: transparent; }
+        .btn-outline:hover { background: #3498db; color: white; }
+
+        .hero-stats { display: flex; justify-content: center; gap: 50px; text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; }
+
+        /* Sections */
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-title { font-size: 2.2rem; color: #2c3e50; margin-bottom: 10px; }
+        .title-underline { width: 60px; height: 4px; background: #3498db; margin: 0 auto; }
+        .section-description { color: #666; margin-top: 15px; }
+
+        /* Sobre */
+        .sobre-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; align-items: center; }
+        .sobre-image img { border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; height: auto; object-fit: cover; }
+        .sobre-text h3 { font-size: 1.8rem; color: #2c3e50; margin-bottom: 5px; }
+        .sobre-subtitle { color: #3498db; font-weight: 600; margin-bottom: 20px; }
+        .sobre-expertise { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .expertise-item { display: flex; align-items: center; gap: 10px; color: #555; }
+        .expertise-item i { color: #27ae60; }
+
+        /* Serviços */
+        .servicos { background: #f8f9fa; }
+        .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .servico-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border-top: 4px solid transparent; }
+        .servico-card:hover { transform: translateY(-10px); border-top-color: #3498db; }
+        .servico-icon { font-size: 2rem; color: #3498db; margin-bottom: 20px; }
+        .servico-card h3 { margin-bottom: 15px; color: #2c3e50; }
+        .servico-list { margin-top: 15px; }
+        .servico-list li { font-size: 0.9rem; color: #666; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .servico-list i { color: #3498db; font-size: 0.8rem; }
+
+        /* Pacotes */
+        .pacotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: stretch; }
+        .pacote-card { background: white; border: 1px solid #eee; border-radius: 10px; padding: 30px; text-align: center; transition: 0.3s; position: relative; }
+        .pacote-featured { border: 2px solid #3498db; transform: scale(1.05); box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2); }
+        .pacote-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #e74c3c; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .pacote-icon { font-size: 2.5rem; color: #3498db; margin-bottom: 15px; }
+        .pacote-header { margin-bottom: 20px; }
+        .pacote-price { margin: 20px 0; }
+        .price-range { font-size: 1.5rem; font-weight: 700; color: #2c3e50; }
+        .pacote-features { text-align: left; margin-bottom: 30px; }
+        .pacote-features li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 10px; }
+        .pacote-features i { color: #27ae60; }
+
+        /* Preços Table */
+        .precos-table-wrapper { overflow-x: auto; margin-top: 30px; }
+        .precos-table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+        .precos-table th, .precos-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #eee; }
+        .precos-table th { background: #2c3e50; color: white; }
+        .precos-table tr:hover { background: #f8f9fa; }
+
+        /* Contacto */
+        .contacto-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; }
+        .contacto-info h3 { margin-bottom: 30px; color: #2c3e50; }
+        .contacto-item { display: flex; gap: 15px; margin-bottom: 25px; }
+        .contacto-item i { color: #3498db; font-size: 1.2rem; margin-top: 3px; }
+        .contacto-social { display: flex; gap: 15px; margin-top: 20px; }
+        .social-btn { padding: 10px 20px; border-radius: 5px; color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .social-btn.whatsapp { background: #25D366; }
+        .social-btn.email { background: #3498db; }
+
+        .contacto-form-wrapper { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { border-color: #3498db; outline: none; }
+        .btn-block { width: 100%; }
+
+        /* Footer */
+        .footer { background: #2c3e50; color: white; padding: 50px 0 20px; }
+        .footer-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 30px; }
+        .footer-brand h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .footer-links h4, .footer-contact h4 { margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #bdc3c7; transition: 0.3s; }
+        .footer-links a:hover { color: white; }
+        .footer-contact p { color: #bdc3c7; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #34495e; color: #bdc3c7; font-size: 0.9rem; }
+
+        /* Scroll Top */
+        .scroll-top { position: fixed; bottom: 30px; right: 30px; background: #3498db; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 999; }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .servicos-grid, .pacotes-grid, .footer-content { grid-template-columns: 1fr 1fr; }
+            .pacote-featured { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; flex-direction: column; position: absolute; top: 80px; left: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+            .nav-menu.active { display: flex; }
+            .nav-toggle { display: block; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .hero-title { font-size: 2rem; }
+            .sobre-content, .servicos-grid, .pacotes-grid, .contacto-content, .footer-content { grid-template-columns: 1fr; }
+            .sobre-image { order: -1; }
+            .footer-content { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegação -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="#inicio">
+                    <i class="fas fa-briefcase"></i>
+                    <span>BBS-CONSULTING</span>
+                </a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#inicio" class="nav-link">Início</a></li>
+                <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                <li><a href="#pacotes" class="nav-link">Pacotes</a></li>
+                <li><a href="#precos" class="nav-link">Preços</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Transforme o Seu Negócio</h1>
+            <p class="hero-subtitle">Consultoria empresarial especializada para impulsionar o crescimento da sua empresa em Angola</p>
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn btn-primary">Consulta Gratuita</a>
+                <a href="#servicos" class="btn btn-secondary">Nossos Serviços</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Clientes Satisfeitos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Compromisso</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="section sobre">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sobre a BBS-CONSULTING</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="sobre-content">
+                <div class="sobre-image">
+                    <img src="https://z-cdn-media.chatglm.cn/files/4db96a5f-03d4-4974-8006-72feccfc86b9.jpeg?auth_key=1873481604-e3f1d73fcf9344499e3210eafd637688-0-449a8a0464e590b7552cf8d17d6cc1b5" alt="António de Brito">
+                </div>
+                <div class="sobre-text">
+                    <h3>António de Brito</h3>
+                    <p class="sobre-subtitle">Especialista em Gestão de Empresas</p>
+                    <p class="sobre-description">
+                        Com mais de 3 anos de experiência em consultoria empresarial, sou técnico de pesquisa de mercado pela RSA e gestor de Recursos Humanos. A BBS-CONSULTING nasceu da paixão por ajudar empreendedores angolanos a concretizarem os seus sonhos de negócio.
+                    </p>
+                    <div class="sobre-expertise">
+                        <div class="expertise-item"><i class="fas fa-check-circle"></i><span>Gestão Empresarial</span></div>
+                        <div class="expertise-item"><i class="fas fa-check-circle"></i><span>Pesquisa de Mercado</span></div>
+                        <div class="expertise-item"><i class="fas fa-check-circle"></i><span>Gestão de RH</span></div>
+                        <div class="expertise-item"><i class="fas fa-check-circle"></i><span>Estratégia de Negócios</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="section servicos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Serviços</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Soluções completas para todas as fases do seu negócio</p>
+            </div>
+            <div class="servicos-grid">
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-building"></i></div>
+                    <h3>Criação de Empresas</h3>
+                    <p>Abertura e registo legal da sua empresa, escolha de nome e estrutura jurídica adequada.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Escolha de nome</li>
+                        <li><i class="fas fa-check"></i> Estrutura legal</li>
+                        <li><i class="fas fa-check"></i> Registo completo</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Planeamento de Negócios</h3>
+                    <p>Desenvolvimento de planos estratégicos, análise de viabilidade e projeções financeiras.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Plano de negócios</li>
+                        <li><i class="fas fa-check"></i> Análise de mercado</li>
+                        <li><i class="fas fa-check"></i> Viabilidade financeira</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Branding</h3>
+                    <p>Criação de identidade visual, logótipo profissional, manual da marca e presença digital.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Criação de logótipo</li>
+                        <li><i class="fas fa-check"></i> Manual da marca</li>
+                        <li><i class="fas fa-check"></i> Kit redes sociais</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Consultoria Financeira</h3>
+                    <p>Estratégia financeira, gestão de fluxo de caixa e otimização de recursos para maximizar lucros.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Gestão financeira</li>
+                        <li><i class="fas fa-check"></i> Fluxo de caixa</li>
+                        <li><i class="fas fa-check"></i> Análise de investimentos</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h3>Marketing Digital</h3>
+                    <p>Estratégias de marketing online, gestão de redes sociais e campanhas publicitárias eficazes.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Estratégia digital</li>
+                        <li><i class="fas fa-check"></i> Gestão de redes</li>
+                        <li><i class="fas fa-check"></i> Campanhas publicitárias</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <div class="servico-icon"><i class="fas fa-users"></i></div>
+                    <h3>Gestão de RH</h3>
+                    <p>Recrutamento, seleção, formação de equipas e otimização da gestão de recursos humanos.</p>
+                    <ul class="servico-list">
+                        <li><i class="fas fa-check"></i> Recrutamento</li>
+                        <li><i class="fas fa-check"></i> Formação de equipas</li>
+                        <li><i class="fas fa-check"></i> Gestão de talentos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pacotes Section -->
+    <section id="pacotes" class="section pacotes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Pacotes de Serviços</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Escolha o pacote ideal para o seu negócio</p>
+            </div>
+            <div class="pacotes-grid">
+                <div class="pacote-card">
+                    <div class="pacote-header">
+                        <div class="pacote-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>Pacote Básico</h3>
+                        <p class="pacote-subtitle">Para quem está a começar</p>
+                    </div>
+                    <div class="pacote-price"><span class="price-range">Desde 150.000 Kz</span></div>
+                    <ul class="pacote-features">
+                        <li><i class="fas fa-check"></i> Abertura de empresa</li>
+                        <li><i class="fas fa-check"></i> Escolha de nome e estrutura</li>
+                        <li><i class="fas fa-check"></i> Registo legal completo</li>
+                        <li><i class="fas fa-check"></i> Consultoria inicial (2h)</li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-outline">Solicitar Orçamento</a>
+                </div>
+
+                <div class="pacote-card pacote-featured">
+                    <div class="pacote-badge">Mais Popular</div>
+                    <div class="pacote-header">
+                        <div class="pacote-icon"><i class="fas fa-star"></i></div>
+                        <h3>Pacote Branding</h3>
+                        <p class="pacote-subtitle">Para destacar-se no mercado</p>
+                    </div>
+                    <div class="pacote-price"><span class="price-range">Desde 100.000 Kz</span></div>
+                    <ul class="pacote-features">
+                        <li><i class="fas fa-check"></i> Criação de logótipo profissional</li>
+                        <li><i class="fas fa-check"></i> Manual completo da marca</li>
+                        <li><i class="fas fa-check"></i> Landing page simples</li>
+                        <li><i class="fas fa-check"></i> Kit para redes sociais</li>
+                        <li><i class="fas fa-check"></i> Cartões de visita digitais</li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-primary">Solicitar Orçamento</a>
+                </div>
+
+                <div class="pacote-card">
+                    <div class="pacote-header">
+                        <div class="pacote-icon"><i class="fas fa-crown"></i></div>
+                        <h3>Pacote Gestão</h3>
+                        <p class="pacote-subtitle">Solução completa</p>
+                    </div>
+                    <div class="pacote-price"><span class="price-range">Desde 400.000 Kz</span></div>
+                    <ul class="pacote-features">
+                        <li><i class="fas fa-check"></i> Plano de negócios detalhado</li>
+                        <li><i class="fas fa-check"></i> Estratégia financeira completa</li>
+                        <li><i class="fas fa-check"></i> Marketing digital mensal</li>
+                        <li><i class="fas fa-check"></i> Consultoria contínua</li>
+                        <li><i class="fas fa-check"></i> Acompanhamento personalizado</li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-outline">Solicitar Orçamento</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preços Section -->
+    <section id="precos" class="section precos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Tabela de Preços</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Transparência e clareza nos nossos valores</p>
+            </div>
+
+            <div class="precos-table-wrapper">
+                <table class="precos-table">
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Descrição</th>
+                            <th>Faixa de Preço (Kz)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Planeamento de Negócios</strong></td>
+                            <td>Plano completo com análise de mercado e viabilidade</td>
+                            <td>250.000 – 1.250.000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Criação de Empresa</strong></td>
+                            <td>Abertura, registo legal e estruturação</td>
+                            <td>150.000 – 600.000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Branding / Logótipo</strong></td>
+                            <td>Identidade visual completa</td>
+                            <td>100.000 – 450.000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marketing Digital (Mensal)</strong></td>
+                            <td>Gestão de redes sociais e campanhas</td>
+                            <td>150.000 – 1.000.000 / mês</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consultoria Financeira</strong></td>
+                            <td>Estratégia financeira e otimização de recursos</td>
+                            <td>400.000 – 1.500.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="precos-nota" style="margin-top: 20px; background: #fff3cd; padding: 15px; border-radius: 5px; color: #856404; display: flex; gap: 10px; align-items: center;">
+                <i class="fas fa-info-circle"></i>
+                <p><strong>Nota:</strong> Os valores são orientativos e variam conforme a complexidade do projeto.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="section contacto">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Entre em Contacto</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Estamos prontos para impulsionar o seu negócio</p>
+            </div>
+            <div class="contacto-content">
+                <div class="contacto-info">
+                    <h3>Informações de Contacto</h3>
+                    <div class="contacto-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong>Localização</strong><p>Viana - Luanda, Angola</p></div>
+                    </div>
+                    <div class="contacto-item">
+                        <i class="fas fa-phone"></i>
+                        <div><strong>Telefone</strong><p><a href="tel:+244937243652">+244 937 243 652</a></p></div>
+                    </div>
+                    <div class="contacto-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div><strong>WhatsApp</strong><p><a href="https://wa.me/244937243652" target="_blank">+244 937 243 652</a></p></div>
+                    </div>
+                    <div class="contacto-item">
+                        <i class="fas fa-envelope"></i>
+                        <div><strong>E-mail</strong><p><a href="mailto:antonio.appy@gmail.com">antonio.appy@gmail.com</a></p></div>
+                    </div>
+                    <div class="contacto-item">
+                        <i class="fab fa-linkedin"></i>
+                        <div><strong>LinkedIn</strong><p><a href="https://www.linkedin.com/in/brito-mazumba" target="_blank">Brito Mazumba</a></p></div>
+                    </div>
+                    <div class="contacto-social">
+                        <a href="https://wa.me/244937243652" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="mailto:antonio.appy@gmail.com" class="social-btn email"><i class="fas fa-envelope"></i> E-mail</a>
+                    </div>
+                </div>
+
+                <div class="contacto-form-wrapper">
+                    <h3>Envie uma Mensagem</h3>
+                    <form id="contactForm" class="contacto-form" action="https://formspree.io/f/SEUCODIGO" method="POST">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone">
+                        </div>
+                        <div class="form-group">
+                            <label for="servico">Serviço de Interesse</label>
+                            <select id="servico" name="servico">
+                                <option value="">Selecione uma opção</option>
+                                <option value="criacao">Criação de Empresa</option>
+                                <option value="planeamento">Planeamento de Negócios</option>
+                                <option value="branding">Branding</option>
+                                <option value="financeira">Consultoria Financeira</option>
+                                <option value="marketing">Marketing Digital</option>
+                                <option value="rh">Gestão de RH</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem *</label>
+                            <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-briefcase"></i> BBS-CONSULTING</h3>
+                    <p>Transformando negócios, construindo futuros.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-phone"></i> +244 937 243 652</p>
+                    <p><i class="fas fa-envelope"></i> antonio.appy@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Viana - Luanda</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="anoAtual"></span> BBS-CONSULTING. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scrollTop" class="scroll-top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- JAVASCRIPT INTEGRADO -->
+    <script>
+        // Ano Atual
+        document.getElementById('anoAtual').textContent = new Date().getFullYear();
+
+        // Menu Mobile
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = navToggle.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.querySelector('i').classList.remove('fa-times');
+                navToggle.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.style.display = 'flex';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
